@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cgnwjioqc2cir"]
+
+[ext_resource type="Script" uid="uid://dpcv7sidi404a" path="res://main/Main.cs" id="1_53q0u"]
+
+[node name="Node" type="Node" unique_id=1843169526]
+script = ExtResource("1_53q0u")
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1348696234]
+offset_right = 68.5
+offset_bottom = 31.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=188467636]
+offset_top = 37.0
+offset_right = 278.0
+offset_bottom = 77.0
+text = "Respuesta"
