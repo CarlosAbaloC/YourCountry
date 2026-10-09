@@ -1,16 +1,17 @@
 # The Way
 
-Prototipo de juego de gestión de países hecho con Godot 4.7 y C#. La idea es separar la simulación y los datos del mundo de la interfaz: el proyecto empieza con una interfaz de texto dentro de Godot y podrá crecer hacia mapas y editores 2D o 3D.
+Prototipo de juego de gestión de países desarrollado con Godot 4.7 y C#. La arquitectura busca mantener los datos y la simulación separados de su representación visual. La interfaz actual es una pequeña consola de prueba dentro de la escena de Godot.
 
-## Estado actual
+## Estado del prototipo
 
-- La escena principal crea el nodo `Game`.
+- `Main` crea el nodo `Game` y conecta los campos de texto de la escena.
 - `GameState` conserva el país inicial y sus ciudades.
-- `GameTime` mantiene el día actual de la partida.
-- El campo de texto de la escena principal acepta el comando `next day` al pulsar Enter.
-- El día comienza en 1 y avanza cuando se envía ese comando.
+- `GameTime` mantiene el día actual, que comienza en 1.
+- `CommandManager` compara el texto de una orden sin distinguir mayúsculas y minúsculas.
+- `Game` admite `next day` para avanzar un día y `list cities` para mostrar las ciudades.
+- El segundo campo permite buscar una ciudad por nombre y muestra sus datos: población, país, economía, salud, tecnología y educación.
 
-Este proyecto está en una fase temprana de prototipado. Sistemas como economía, población, industria, logística y diplomacia todavía no están implementados.
+El proyecto está en una fase temprana. Los valores de las estadísticas y los sistemas de economía, población, industria, logística y diplomacia todavía son datos de prueba o están pendientes de implementación.
 
 ## Requisitos
 
@@ -22,16 +23,17 @@ Este proyecto está en una fase temprana de prototipado. Sistemas como economía
 1. Abre `project.godot` con Godot 4.7 .NET.
 2. Espera a que Godot importe y compile el proyecto.
 3. Ejecuta el proyecto con F6/F5 o desde el botón de ejecución.
-4. Escribe `next day` en el campo de texto de la escena y pulsa Enter.
+4. En el campo de órdenes, escribe `next day` o `list cities` y pulsa Enter.
+5. En el campo de búsqueda, escribe `Madrid` o `Barcelona` y pulsa Enter para consultar una ciudad.
 
-El día actualizado se muestra en la etiqueta de la interfaz. Los mensajes de depuración aparecen en el panel Output de Godot.
+Las respuestas aparecen en las etiquetas de la interfaz; los mensajes de depuración aparecen en el panel Output de Godot.
 
 ## Estructura
 
 ```text
 core/       Coordinación del juego, estado, tiempo y comandos
 country/    Modelos iniciales de país y ciudad
-main/       Escena principal y su interfaz de prototipo
+main/       Escena principal y controles de prototipo
 ```
 
-La interfaz es una representación del juego; los datos y la simulación no deberían depender de cómo se dibujen.
+La interfaz es una representación del juego: los modelos y las reglas de simulación no deberían depender de cómo se muestren.

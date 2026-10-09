@@ -19,7 +19,7 @@ public partial class Game : Node
 			GD.Print($"Ciudad: {city.Name}, Población: {city.Population}");
 			num++;
 		}
-		Console.WriteLine("¿Quieres pasar de día? Escribe Y o N y pulsa Enter.");
+		//Console.WriteLine("¿Quieres pasar de día? Escribe Y o N y pulsa Enter.");
 
 
 
@@ -33,7 +33,7 @@ public partial class Game : Node
 	{
 		
 		var spain = new Country("España");
-		var france = new Country("Francia");
+		//var france = new Country("Francia");
 		try
 		{
 			spain.AddCity(new City(spain, "Madrid", 3527924));
@@ -48,9 +48,60 @@ public partial class Game : Node
 		return new GameState(spain);
 	}
 
+	public string HandleCommand(string text)
+	{
+		if(Commands.IsNextDayCommand(text, "next day"))
+		{
+			AdvanceDay();
+			return $"Dia actual: {Time.CurrentDay}";
+		}
+		if(Commands.IsNextDayCommand(text, "list cities"))
+		{
+			string listCities = ListCities();
+			return listCities;
+		}
+		return "Comando no reconocido.";
+	}
+
+	public string OnCitySearchSubmitted(string text)
+	{
+		foreach(var city in State.Country.Cities)
+		{
+			if(city.Name.Equals(text.Trim(), StringComparison.OrdinalIgnoreCase))
+			{
+				string response = $"""
+				Nombre: {city.Name}
+				Población: {city.Population}
+				País: {city.Country.Name}
+				Economia: {city.Economy}
+				Salud: {city.Health}
+				Tecnología: {city.Technology}
+				Educación: {city.Education}
+				""";
+				return response;
+			}
+		}
+		return "No se encontro la ciudad";
+	}
+
 	public void AdvanceDay()
 	{
 		Time.AdvanceDay();
 		GD.Print($"Día {Time.CurrentDay}");
+	}
+
+	public string ListCities()
+	{
+		var num = 1;
+		var text = "Lista de ciudades:\n";
+		foreach (var city in State.Country.Cities)
+		{
+			GD.Print("Ciudad: " + num);
+			text += $"Ciudad: {city.Name}, Población: {city.Population}";
+			text += "\n";
+
+			num++;
+		}
+		return text;
 	}
 }

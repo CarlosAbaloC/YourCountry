@@ -6,11 +6,23 @@
 script = ExtResource("1_53q0u")
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=1348696234]
-offset_right = 68.5
+offset_right = 383.0
 offset_bottom = 31.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=188467636]
 offset_top = 37.0
-offset_right = 278.0
-offset_bottom = 77.0
+offset_right = 580.0
+offset_bottom = 298.0
 text = "Respuesta"
+
+[node name="LineEdit2" type="LineEdit" parent="." unique_id=1916403443]
+offset_left = 767.0
+offset_right = 1150.0
+offset_bottom = 31.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=369538109]
+offset_left = 702.0
+offset_top = 64.0
+offset_right = 1151.0
+offset_bottom = 325.0
+text = "BusquedaCiudad"
