@@ -3,12 +3,12 @@ using System;
 
 public partial class City
 {
-	private string name = "Madriz";
-	private int population = 100;
-	private int economy = 100;
-	private int health = 100;
-	private int technology = 100;
-	private int education = 100;
+	private string name = "Ciudad";
+	private int population = 0;
+	private int economy = 0;
+	private int health = 0;
+	private int technology = 0;
+	private int education = 0;
 	public Country Country {get;}
 
 	public City(Country country, string name, int population)
