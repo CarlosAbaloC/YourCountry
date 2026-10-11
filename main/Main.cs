@@ -28,7 +28,7 @@ public partial class Main : Node
 
 		_commandInput.TextSubmitted += OnCommandSubmitted;
 		_output.Text = "Escribe el codigo que necesites y pulsa enter";
-		_commandInput2.TextSubmitted += OnCommandSubmitted;
+		_commandInput2.TextSubmitted += OnCitiesCommand;
 		
 
 	}
@@ -52,6 +52,9 @@ public partial class Main : Node
 		// _commandInput.Clear();
 		_output.Text = _game.HandleCommand(text);
 		_commandInput.Clear();
+	}
+	private void OnCitiesCommand(string text)
+	{
 		_output2.Text = _game.OnCitySearchSubmitted(text);
 		_commandInput2.Clear();
 	}

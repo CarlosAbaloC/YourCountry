@@ -1,8 +1,15 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Game : Node
 {
+	List<string> commandList = new List<string>()
+	{
+		"next day",
+		"list cities"
+
+	};
 	public GameState State { get; } = CreateInitialState();
 	public GameTime Time {get; } = new();
 	public CommandManager Commands {get; } = new();
@@ -60,7 +67,17 @@ public partial class Game : Node
 			string listCities = ListCities();
 			return listCities;
 		}
+		if(Commands.IsNextDayCommand(text, "help"))
+		{
+			var list = "";
+			foreach(string command in commandList)
+			{
+				list += command + ", \n";
+			}
+			return $"Comandos disponibles: \n{list}";
+		}
 		return "Comando no reconocido.";
+		
 	}
 
 	public string OnCitySearchSubmitted(string text)

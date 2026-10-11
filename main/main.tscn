@@ -26,3 +26,58 @@ offset_top = 64.0
 offset_right = 1151.0
 offset_bottom = 325.0
 text = "BusquedaCiudad"
+
+[node name="RTLCreateCityTitle" type="RichTextLabel" parent="." unique_id=1209617067]
+offset_left = 20.0
+offset_top = 328.0
+offset_right = 520.0
+offset_bottom = 359.0
+text = "Crea una nueva ciudad:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LENameCity" type="LineEdit" parent="." unique_id=1895777729]
+offset_left = 120.0
+offset_top = 381.0
+offset_right = 520.0
+offset_bottom = 412.0
+
+[node name="RTLNameCity" type="RichTextLabel" parent="." unique_id=940209972]
+offset_left = 20.0
+offset_top = 381.0
+offset_right = 100.0
+offset_bottom = 412.0
+text = "Nombre"
+
+[node name="LECityBudget" type="LineEdit" parent="." unique_id=1851752087]
+offset_left = 120.0
+offset_top = 481.0
+offset_right = 520.0
+offset_bottom = 512.0
+
+[node name="RTLCityBudget" type="RichTextLabel" parent="." unique_id=913274846]
+offset_left = 20.0
+offset_top = 481.0
+offset_right = 100.0
+offset_bottom = 512.0
+text = "Dinero"
+
+[node name="LECityLocation" type="LineEdit" parent="." unique_id=1585261779]
+offset_left = 120.0
+offset_top = 431.0
+offset_right = 520.0
+offset_bottom = 462.0
+
+[node name="RTLCityLocation" type="RichTextLabel" parent="." unique_id=30723443]
+offset_left = 20.0
+offset_top = 431.0
+offset_right = 100.0
+offset_bottom = 462.0
+text = "Ubicacion"
+
+[node name="BtnCreateCity" type="Button" parent="." unique_id=1019903315]
+offset_left = 230.0
+offset_top = 540.0
+offset_right = 310.0
+offset_bottom = 572.0
+text = "Crear"
