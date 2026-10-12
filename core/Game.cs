@@ -7,7 +7,9 @@ public partial class Game : Node
 	List<string> commandList = new List<string>()
 	{
 		"next day",
-		"list cities"
+		"list cities",
+		"all cities",
+		"countries"
 
 	};
 	public GameState State { get; } = CreateInitialState();
@@ -40,19 +42,22 @@ public partial class Game : Node
 	{
 		
 		var spain = new Country("España");
+		var france = new Country("Francia");
 		//var france = new Country("Francia");
 		try
 		{
 			spain.AddCity(new City(spain, "Madrid", 3527924));
 			spain.AddCity(new City(spain, "Barcelona", 1620343));
+			france.AddCity(new City(france, "París", 2140526));
 		}
 		catch (ArgumentException ex)
 		{
 			GD.PrintErr(ex.Message);
 		}
 		//AddCity esta en country
-
-		return new GameState(spain);
+		var state = new GameState(spain);
+		state.Addcounty(france);
+		return state;
 	}
 
 	public string HandleCommand(string text)
@@ -66,6 +71,11 @@ public partial class Game : Node
 		{
 			string listCities = ListCities();
 			return listCities;
+		}
+		if(Commands.IsNextDayCommand(text, "all cities"))
+		{
+			string allCities = AllCities();
+			return allCities;
 		}
 		if(Commands.IsNextDayCommand(text, "help"))
 		{
@@ -111,6 +121,7 @@ public partial class Game : Node
 	{
 		var num = 1;
 		var text = "Lista de ciudades:\n";
+
 		foreach (var city in State.Country.Cities)
 		{
 			GD.Print("Ciudad: " + num);
@@ -121,4 +132,38 @@ public partial class Game : Node
 		}
 		return text;
 	}
+
+		public string AllCities()
+	{
+		var num = 1;
+		var text = "Lista de ciudades:\n";
+		foreach (var state in State.Countries)
+		{
+			foreach (var city in state.Cities)
+			{
+				GD.Print("Ciudad: " + num);
+				text += $"Ciudad: {city.Name}, Población: {city.Population}, Pais: {city.Country.Name}";
+				text += "\n";
+
+				num++;
+			}
+		}
+		
+		return text;
+	}
+
+	public void NewCity(string name, string countryName, int budget, int population)
+	{
+		if(!string.Equals(
+			State.Country.Name,
+			countryName.Trim(),
+			StringComparison.OrdinalIgnoreCase
+			))
+		{
+			GD.PrintErr($"El país {countryName} no coincide con el país del juego: {State.Country.Name}");
+		}
+		Country country = State.Country;
+		country.AddCity(new City(country, name, population, budget, 0, 0, 0));
+	}
+
 }

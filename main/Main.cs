@@ -12,6 +12,11 @@ public partial class Main : Node
 	private RichTextLabel _output = null!;
 	private LineEdit _commandInput2 = null!;
 	private RichTextLabel _output2 = null!;
+	private LineEdit _LENameCity = null!;
+	private LineEdit _LECityLocation = null!;
+	private LineEdit _LECityBudget = null!;
+	private LineEdit _LECCountry = null!;
+	private Button _BtnCreateCity = null!;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -19,7 +24,13 @@ public partial class Main : Node
 		_commandInput = GetNode<LineEdit>("LineEdit");
 		_output = GetNode<RichTextLabel>("RichTextLabel");
 		_commandInput2 = GetNode<LineEdit>("LineEdit2");
-		_output2 = GetNode<RichTextLabel>("RichTextLabel2");		
+		_output2 = GetNode<RichTextLabel>("RichTextLabel2");	
+		_LENameCity = GetNode<LineEdit>("LENameCity");
+		_LECityLocation = GetNode<LineEdit>("LECityLocation");
+		_LECityBudget = GetNode<LineEdit>("_LECityBudget");
+		_LECCountry = GetNode<LineEdit>("_LECCountry");
+		_BtnCreateCity = GetNode<Button>("BtnCreateCity");
+
 
 		var game = new Game();
 		_game = game;
@@ -29,7 +40,7 @@ public partial class Main : Node
 		_commandInput.TextSubmitted += OnCommandSubmitted;
 		_output.Text = "Escribe el codigo que necesites y pulsa enter";
 		_commandInput2.TextSubmitted += OnCitiesCommand;
-		
+		_BtnCreateCity.Pressed += OnAddCityPressed;
 
 	}
 
@@ -59,6 +70,10 @@ public partial class Main : Node
 		_commandInput2.Clear();
 	}
 
+	private void OnAddCityPressed()
+	{
+		//_game.NewCity(
+	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{

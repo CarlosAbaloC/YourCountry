@@ -28,7 +28,7 @@ public partial class Country
 				nameof(city)
 			);
 		}
-		GD.Print("Pais del city: " + city.Country);
+		GD.Print("Pais del city: " + city.Country.Name);
 		GD.Print("Pais en general: " + Name);
 		
 		_cities.Add(city);

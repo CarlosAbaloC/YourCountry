@@ -38,46 +38,63 @@ vertical_alignment = 1
 
 [node name="LENameCity" type="LineEdit" parent="." unique_id=1895777729]
 offset_left = 120.0
-offset_top = 381.0
+offset_top = 380.0
 offset_right = 520.0
-offset_bottom = 412.0
+offset_bottom = 411.0
 
 [node name="RTLNameCity" type="RichTextLabel" parent="." unique_id=940209972]
 offset_left = 20.0
-offset_top = 381.0
+offset_top = 380.0
 offset_right = 100.0
-offset_bottom = 412.0
+offset_bottom = 411.0
 text = "Nombre"
-
-[node name="LECityBudget" type="LineEdit" parent="." unique_id=1851752087]
-offset_left = 120.0
-offset_top = 481.0
-offset_right = 520.0
-offset_bottom = 512.0
-
-[node name="RTLCityBudget" type="RichTextLabel" parent="." unique_id=913274846]
-offset_left = 20.0
-offset_top = 481.0
-offset_right = 100.0
-offset_bottom = 512.0
-text = "Dinero"
+vertical_alignment = 1
 
 [node name="LECityLocation" type="LineEdit" parent="." unique_id=1585261779]
 offset_left = 120.0
-offset_top = 431.0
+offset_top = 430.0
 offset_right = 520.0
-offset_bottom = 462.0
+offset_bottom = 461.0
 
 [node name="RTLCityLocation" type="RichTextLabel" parent="." unique_id=30723443]
 offset_left = 20.0
-offset_top = 431.0
+offset_top = 430.0
 offset_right = 100.0
-offset_bottom = 462.0
+offset_bottom = 461.0
 text = "Ubicacion"
+vertical_alignment = 1
+
+[node name="LECityBudget" type="LineEdit" parent="." unique_id=1851752087]
+offset_left = 120.0
+offset_top = 480.0
+offset_right = 520.0
+offset_bottom = 511.0
+
+[node name="RTLCityBudget" type="RichTextLabel" parent="." unique_id=913274846]
+offset_left = 20.0
+offset_top = 480.0
+offset_right = 100.0
+offset_bottom = 511.0
+text = "Dinero"
+vertical_alignment = 1
 
 [node name="BtnCreateCity" type="Button" parent="." unique_id=1019903315]
 offset_left = 230.0
-offset_top = 540.0
+offset_top = 580.0
 offset_right = 310.0
-offset_bottom = 572.0
+offset_bottom = 612.0
 text = "Crear"
+
+[node name="LECountry" type="LineEdit" parent="." unique_id=1461517319]
+offset_left = 119.0
+offset_top = 530.0
+offset_right = 519.0
+offset_bottom = 561.0
+
+[node name="RTLCountry" type="RichTextLabel" parent="." unique_id=286752264]
+offset_left = 19.0
+offset_top = 530.0
+offset_right = 99.0
+offset_bottom = 561.0
+text = "Pais"
+vertical_alignment = 1
