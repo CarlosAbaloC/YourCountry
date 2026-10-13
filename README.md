@@ -1,4 +1,4 @@
-# The Way
+# Your Country
 
 Prototipo de juego de gestión de países desarrollado con Godot 4.7 y C#. La arquitectura busca mantener los datos y la simulación separados de su representación visual. La interfaz actual es una pequeña consola de prueba dentro de la escena de Godot.
 
