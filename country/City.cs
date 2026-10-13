@@ -5,6 +5,7 @@ public partial class City
 {
 	private string name = "Ciudad";
 	private int population = 0;
+	private string location = "";
 	private int economy = 0;
 	private int health = 0;
 	private int technology = 0;
@@ -28,12 +29,24 @@ public partial class City
 		this.technology = technology;
 		this.education = education;
 	}
+	public City(Country country, string name, string location, int economy)
+	{
+		Country = country;
+		this.name = name;
+		this.location = location;
+		this.economy = economy;
+	}
 
 
 	public string Name
 	{
 		get { return name; }
 		private set { name = value; }
+	}
+	public string Location
+	{
+		get { return location; }
+		private set { location = value; }
 	}
 	public int Population
 	{

@@ -98,6 +98,7 @@ public partial class Game : Node
 			{
 				string response = $"""
 				Nombre: {city.Name}
+				Ubicacion: {city.Location}
 				Población: {city.Population}
 				País: {city.Country.Name}
 				Economia: {city.Economy}
@@ -152,7 +153,7 @@ public partial class Game : Node
 		return text;
 	}
 
-	public void NewCity(string name, string countryName, int budget, int population)
+	public void NewCity(string name, string countryName, string location, int budget)
 	{
 		if(!string.Equals(
 			State.Country.Name,
@@ -163,7 +164,7 @@ public partial class Game : Node
 			GD.PrintErr($"El país {countryName} no coincide con el país del juego: {State.Country.Name}");
 		}
 		Country country = State.Country;
-		country.AddCity(new City(country, name, population, budget, 0, 0, 0));
+		country.AddCity(new City(country, name, location, budget));
 	}
 
 }

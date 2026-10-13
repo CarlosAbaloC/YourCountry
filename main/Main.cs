@@ -27,8 +27,8 @@ public partial class Main : Node
 		_output2 = GetNode<RichTextLabel>("RichTextLabel2");	
 		_LENameCity = GetNode<LineEdit>("LENameCity");
 		_LECityLocation = GetNode<LineEdit>("LECityLocation");
-		_LECityBudget = GetNode<LineEdit>("_LECityBudget");
-		_LECCountry = GetNode<LineEdit>("_LECCountry");
+		_LECityBudget = GetNode<LineEdit>("LECityBudget");
+		_LECCountry = GetNode<LineEdit>("LECountry");
 		_BtnCreateCity = GetNode<Button>("BtnCreateCity");
 
 
@@ -73,6 +73,17 @@ public partial class Main : Node
 	private void OnAddCityPressed()
 	{
 		//_game.NewCity(
+		string name = _LENameCity.Text.Trim(); 
+		GD.Print(name);
+		string location = _LECityLocation.Text.Trim(); 
+		GD.Print(location);
+		int budget = int.Parse(_LECityBudget.Text.Trim()); 
+		GD.Print(budget);
+		string pais = _LECCountry.Text.Trim(); 
+		GD.Print(pais);
+		_game.NewCity(name, pais, location, budget);
+
+
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
