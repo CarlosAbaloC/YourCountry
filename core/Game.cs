@@ -155,16 +155,25 @@ public partial class Game : Node
 
 	public void NewCity(string name, string countryName, string location, int budget)
 	{
-		if(!string.Equals(
-			State.Country.Name,
-			countryName.Trim(),
-			StringComparison.OrdinalIgnoreCase
-			))
+		bool countryFound = false;
+		foreach(Country country in State.Countries)
 		{
-			GD.PrintErr($"El país {countryName} no coincide con el país del juego: {State.Country.Name}");
+			if (string.Equals(
+				country.Name,
+				countryName.Trim(),
+				StringComparison.OrdinalIgnoreCase
+			))
+			{
+				country.AddCity(new City(country, name, location, budget));
+				countryFound = true;
+				break;
+			}
 		}
-		Country country = State.Country;
-		country.AddCity(new City(country, name, location, budget));
+
+		if (!countryFound)
+		{
+			GD.PrintErr($"No se encontró el país {countryName}.");
+		}
 	}
 
 }

@@ -8,7 +8,8 @@ Prototipo de juego de gestión de países desarrollado con Godot 4.7 y C#. El pr
 - Los datos de ejemplo de España y Francia se crean en código.
 - La interfaz acepta los comandos `next day`, `list cities`, `all cities` y `help`.
 - Hay un campo para consultar una ciudad por nombre.
-- El formulario de creación de ciudades es experimental: la selección del país y la validación de datos todavía están incompletas.
+- El formulario de creación de ciudades permite asignar la ciudad a un país existente escribiendo su nombre; la búsqueda no distingue mayúsculas y minúsculas. Si el país no existe, no se crea la ciudad y se muestra un error en Output.
+- La validación del resto de datos del formulario sigue en desarrollo.
 - Los datos todavía no se cargan desde JSON. Economía, población y otros sistemas de simulación siguen en desarrollo.
 
 ## Requisitos
