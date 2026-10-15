@@ -92,22 +92,26 @@ public partial class Game : Node
 
 	public string OnCitySearchSubmitted(string text)
 	{
-		foreach(var city in State.Country.Cities)
+		foreach(var country in State.Countries)
 		{
-			if(city.Name.Equals(text.Trim(), StringComparison.OrdinalIgnoreCase))
+			foreach(var city in country.Cities)
 			{
-				string response = $"""
-				Nombre: {city.Name}
-				Ubicacion: {city.Location}
-				Población: {city.Population}
-				País: {city.Country.Name}
-				Economia: {city.Economy}
-				Salud: {city.Health}
-				Tecnología: {city.Technology}
-				Educación: {city.Education}
-				""";
-				return response;
+				if(city.Name.Equals(text.Trim(), StringComparison.OrdinalIgnoreCase))
+				{
+					string response = $"""
+					Nombre: {city.Name}
+					Ubicacion: {city.Location}
+					Población: {city.Population}
+					País: {city.Country.Name}
+					Economia: {city.Economy}
+					Salud: {city.Health}
+					Tecnología: {city.Technology}
+					Educación: {city.Education}
+					""";
+					return response;
+				}
 			}
+
 		}
 		return "No se encontro la ciudad";
 	}
