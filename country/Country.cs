@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 public partial class Country
 {
-	//Para que nadie pueda modificar esta lista
+	// Expone una vista de solo lectura para evitar cambios externos en la lista.
 	private readonly List<City> _cities = new();
 
 	public string Name {get;}
@@ -15,21 +15,21 @@ public partial class Country
 		Name = name;
 	}
 
-	//Añade la clase
+	// Añade una ciudad que pertenece a este mismo país.
 	public void AddCity(City city)
 	{
 		ArgumentNullException.ThrowIfNull(city);
 
-		//this hace referencia a todo el objeto, igual que city.country
+		// La ciudad debe conservar una referencia a esta misma instancia de país.
 		if(!ReferenceEquals(city.Country, this))
 		{
 			throw new ArgumentException(
-				"La  ciudad tiene una ubicacion de pais distinta al lugar donde se guarda ", 
+				"La ciudad pertenece a un país distinto del país donde se intenta guardar.",
 				nameof(city)
 			);
 		}
-		GD.Print("Pais del city: " + city.Country.Name);
-		GD.Print("Pais en general: " + Name);
+		GD.Print("País de la ciudad: " + city.Country.Name);
+		GD.Print("País donde se guarda: " + Name);
 		
 		_cities.Add(city);
 	}

@@ -5,7 +5,7 @@ public partial class GameTime
 {
 	public int CurrentDay {get; private set;} = 1;
 
-	// Avanza el tiempo en un día, hay que cambiarlo a cuando haya un boton
+	// Avanza el reloj del juego un día.
 	public void AdvanceDay()
 	{
 		CurrentDay++;

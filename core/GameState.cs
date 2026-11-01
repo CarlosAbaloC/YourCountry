@@ -10,17 +10,17 @@ public class GameState
     public GameState(Country country)
     {
         ArgumentNullException.ThrowIfNull(country);
-        GD.Print("El pais que se guarda es: ", country);
+        GD.Print("El país que se guarda es: ", country);
         Country = country;
         _countries.Add(country);
 
     }
-    public void Addcounty(Country county)
+    public void AddCountry(Country country)
 	{
-		ArgumentNullException.ThrowIfNull(county);
+		ArgumentNullException.ThrowIfNull(country);
 
-		GD.Print("Pais: " + county);
+		GD.Print("País: " + country);
 		
-		_countries.Add(county);
+		_countries.Add(country);
 	}
 }

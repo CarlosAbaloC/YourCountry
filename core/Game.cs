@@ -4,46 +4,34 @@ using System.Collections.Generic;
 
 public partial class Game : Node
 {
-	List<string> commandList = new List<string>()
+	private readonly List<string> _commandList = new()
 	{
 		"next day",
 		"list cities",
 		"all cities",
-		"countries"
+		"help"
 
 	};
 	public GameState State { get; } = CreateInitialState();
 	public GameTime Time {get; } = new();
 	public CommandManager Commands {get; } = new();
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GD.Print($"Juego iniciado. Día {Time.CurrentDay}");
-		//Time.AdvanceDay();
-		//GD.Print($"Juego iniciado. Día {Time.CurrentDay}");
-		var num = 1;
 		foreach (var city in State.Country.Cities)
 		{
-			GD.Print("Ciudad: " + num);
 			GD.Print($"Ciudad: {city.Name}, Población: {city.Population}");
-			num++;
 		}
-		//Console.WriteLine("¿Quieres pasar de día? Escribe Y o N y pulsa Enter.");
-
-
-
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
+
 	private static GameState CreateInitialState()
 	{
-		
 		var spain = new Country("España");
 		var france = new Country("Francia");
-		//var france = new Country("Francia");
 		try
 		{
 			spain.AddCity(new City(spain, "Madrid", 3527924));
@@ -54,40 +42,36 @@ public partial class Game : Node
 		{
 			GD.PrintErr(ex.Message);
 		}
-		//AddCity esta en country
 		var state = new GameState(spain);
-		state.Addcounty(france);
+		state.AddCountry(france);
 		return state;
 	}
 
 	public string HandleCommand(string text)
 	{
-		if(Commands.IsNextDayCommand(text, "next day"))
+		if(Commands.MatchesCommand(text, "next day"))
 		{
 			AdvanceDay();
-			return $"Dia actual: {Time.CurrentDay}";
+			return $"Día actual: {Time.CurrentDay}";
 		}
-		if(Commands.IsNextDayCommand(text, "list cities"))
+		if(Commands.MatchesCommand(text, "list cities"))
 		{
-			string listCities = ListCities();
-			return listCities;
+			return ListCities();
 		}
-		if(Commands.IsNextDayCommand(text, "all cities"))
+		if(Commands.MatchesCommand(text, "all cities"))
 		{
-			string allCities = AllCities();
-			return allCities;
+			return AllCities();
 		}
-		if(Commands.IsNextDayCommand(text, "help"))
+		if(Commands.MatchesCommand(text, "help"))
 		{
-			var list = "";
-			foreach(string command in commandList)
+			var commandText = "";
+			foreach (string command in _commandList)
 			{
-				list += command + ", \n";
+				commandText += command + ",\n";
 			}
-			return $"Comandos disponibles: \n{list}";
+			return $"Comandos disponibles:\n{commandText}";
 		}
 		return "Comando no reconocido.";
-		
 	}
 
 	public string OnCitySearchSubmitted(string text)
@@ -100,10 +84,10 @@ public partial class Game : Node
 				{
 					string response = $"""
 					Nombre: {city.Name}
-					Ubicacion: {city.Location}
+					Ubicación: {city.Location}
 					Población: {city.Population}
 					País: {city.Country.Name}
-					Economia: {city.Economy}
+					Economía: {city.Economy}
 					Salud: {city.Health}
 					Tecnología: {city.Technology}
 					Educación: {city.Education}
@@ -113,7 +97,7 @@ public partial class Game : Node
 			}
 
 		}
-		return "No se encontro la ciudad";
+		return "No se encontró la ciudad";
 	}
 
 	public void AdvanceDay()
@@ -124,43 +108,38 @@ public partial class Game : Node
 
 	public string ListCities()
 	{
-		var num = 1;
-		var text = "Lista de ciudades:\n";
+		var cityNumber = 1;
+		var output = "Lista de ciudades:\n";
 
 		foreach (var city in State.Country.Cities)
 		{
-			GD.Print("Ciudad: " + num);
-			text += $"Ciudad: {city.Name}, Población: {city.Population}";
-			text += "\n";
-
-			num++;
+			GD.Print($"Ciudad {cityNumber}: {city.Name}");
+			output += $"Ciudad: {city.Name}, Población: {city.Population}\n";
+			cityNumber++;
 		}
-		return text;
+		return output;
 	}
 
-		public string AllCities()
+	public string AllCities()
 	{
-		var num = 1;
-		var text = "Lista de ciudades:\n";
-		foreach (var state in State.Countries)
+		var cityNumber = 1;
+		var output = "Lista de ciudades:\n";
+		foreach (var country in State.Countries)
 		{
-			foreach (var city in state.Cities)
+			foreach (var city in country.Cities)
 			{
-				GD.Print("Ciudad: " + num);
-				text += $"Ciudad: {city.Name}, Población: {city.Population}, Pais: {city.Country.Name}";
-				text += "\n";
-
-				num++;
+				GD.Print($"Ciudad {cityNumber}: {city.Name}");
+				output += $"Ciudad: {city.Name}, Población: {city.Population}, País: {city.Country.Name}\n";
+				cityNumber++;
 			}
 		}
-		
-		return text;
+
+		return output;
 	}
 
 	public void NewCity(string name, string countryName, string location, int budget)
 	{
-		bool countryFound = false;
-		foreach(Country country in State.Countries)
+		foreach (Country country in State.Countries)
 		{
 			if (string.Equals(
 				country.Name,
@@ -169,15 +148,10 @@ public partial class Game : Node
 			))
 			{
 				country.AddCity(new City(country, name, location, budget));
-				countryFound = true;
-				break;
+				return;
 			}
 		}
 
-		if (!countryFound)
-		{
-			GD.PrintErr($"No se encontró el país {countryName}.");
-		}
+		GD.PrintErr($"No se encontró el país {countryName}.");
 	}
-
 }
