@@ -1,10 +1,16 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 public partial class Main : Node
 {
-	private Game _game = null!;
+	//? permite null
+	private Game? _game;
+	//Null avisa de que los campos se asignan despues -
+	// ! Dice que cuando se inicie el elemento no sera null
 
 	private LineEdit _commandInput = null!;
 	private RichTextLabel _commandOutput = null!;
@@ -18,6 +24,9 @@ public partial class Main : Node
 	private RichTextLabel _countryListOutput = null!;
 	private Button _listCountriesButton = null!;
 	private Button _listCitiesButton = null!;
+	private Button _btnSave = null!;
+	private String _idCountry = null!;
+
 
 	public override void _Ready()
 	{
@@ -25,14 +34,15 @@ public partial class Main : Node
 		_commandOutput = GetNode<RichTextLabel>("RichTextLabel");
 		_citySearchInput = GetNode<LineEdit>("LineEdit2");
 		_citySearchOutput = GetNode<RichTextLabel>("RichTextLabel2");
-		_cityNameInput = GetNode<LineEdit>("CityNameInput");
-		_cityLocationInput = GetNode<LineEdit>("CityLocationInput");
-		_cityBudgetInput = GetNode<LineEdit>("CityBudgetInput");
-		_countryNameInput = GetNode<LineEdit>("CountryNameInput");
-		_createCityButton = GetNode<Button>("CreateCityButton");
-		_countryListOutput = GetNode<RichTextLabel>("CountryListOutput");
-		_listCountriesButton = GetNode<Button>("ListCountriesButton");
-		_listCitiesButton = GetNode<Button>("ListCitiesButton");
+		_cityNameInput = GetNode<LineEdit>("LENameCity");
+		_cityLocationInput = GetNode<LineEdit>("LECityLocation");
+		_cityBudgetInput = GetNode<LineEdit>("LECityBudget");
+		_countryNameInput = GetNode<LineEdit>("LECountry");
+		_createCityButton = GetNode<Button>("BtnCreateCity");
+		_countryListOutput = GetNode<RichTextLabel>("RTLList");
+		_listCountriesButton = GetNode<Button>("BtnListCountries");
+		_listCitiesButton = GetNode<Button>("BtnListCities");
+		_btnSave = GetNode<Button>("BtnSave");
 
 		_game = new Game();
 		AddChild(_game);
@@ -44,10 +54,28 @@ public partial class Main : Node
 		_createCityButton.Pressed += OnCreateCityPressed;
 		_listCountriesButton.Pressed += ListCountries;
 		_listCitiesButton.Pressed += ListCities;
+		YourCountry("Spain");
+		_btnSave.Pressed += SaveParty;
+		
 	}
 
 	private void OnCommandSubmitted(string text)
 	{
+		// if(_game is null)
+		// {
+		// 	GD.PushError("Aun no se ha iniciado el juego");
+		// 	return;
+		// }
+		// if(string.Equals(text.Trim(), "next day", StringComparison.OrdinalIgnoreCase))
+		// {
+		// 	_game.AdvanceDay();
+		// 	_commandOutput.Text = $"Dia actual: {_game.Time.CurrentDay}";
+		// }
+		// else
+		// {
+		// 	_commandOutput.Text = "Comando no reconocido. Es next day";
+		// }
+		// _commandInput.Clear();
 		_commandOutput.Text = _game.HandleCommand(text);
 		_commandInput.Clear();
 	}
@@ -60,6 +88,7 @@ public partial class Main : Node
 
 	private void OnCreateCityPressed()
 	{
+		//_game.NewCity(
 		string cityName = _cityNameInput.Text.Trim();
 		string location = _cityLocationInput.Text.Trim();
 		int budget = int.Parse(_cityBudgetInput.Text.Trim());
@@ -126,7 +155,7 @@ public partial class Main : Node
 		Godot.Collections.Dictionary root = jsonData.AsGodotDictionary();
 		Godot.Collections.Array countries = root["countries"].AsGodotArray();
 		var cityNames = new List<string>();
-
+		_countryListOutput.Clear();
 		foreach (Variant countryValue in countries)
 		{
 			Godot.Collections.Dictionary country = countryValue.AsGodotDictionary();
@@ -151,7 +180,7 @@ public partial class Main : Node
 				{
 					Godot.Collections.Dictionary city = cityValue.AsGodotDictionary();
 					string cityName = city["name"].AsString();
-					GD.Print($"Localidad: {cityName}");
+					//GD.Print($"Localidad: {cityName}");
 					cityNames.Add(cityName);
 				}
 			}
@@ -161,4 +190,110 @@ public partial class Main : Node
 
 		_countryListOutput.Text = string.Join("\n", cityNames);
 	}
+	public void YourCountry(string yourCountry)
+	{
+		string jsonText = FileAccess.GetFileAsString(
+			"res://data/game_database.json"
+			);
+
+		var parser = new Json();
+		Error parseResult = parser.Parse(jsonText);
+		if(parseResult != Error.Ok)
+		{
+			GD.PushError($"Error al analizar el JSON {parser.GetErrorMessage()}");
+			return;
+		}
+
+		Variant jsonData = parser.Data;
+
+		Godot.Collections.Dictionary root = jsonData.AsGodotDictionary();
+		Godot.Collections.Array countries = root["countries"].AsGodotArray();
+
+		var cityNames = new List<string>();
+
+		foreach (Variant countryValue in countries)
+		{
+			Godot.Collections.Dictionary country = countryValue.AsGodotDictionary();
+			string countryName = country["name_en"].AsString();
+			var selectedCountry = new Country(countryName);
+			var expectedCityNames = new List<string>();
+			if(!countryName.Equals(yourCountry, StringComparison.OrdinalIgnoreCase))
+			{
+				continue;
+			}
+			Godot.Collections.Array regions = country["regions"].AsGodotArray();
+			
+			_idCountry = country["id"].AsString();
+
+			foreach (Variant regionValue in regions)
+			{
+				Godot.Collections.Dictionary region = regionValue.AsGodotDictionary();
+				GD.Print($"Region: {region["name"].AsString()}");
+				Godot.Collections.Array cities = region["cities"].AsGodotArray();
+
+				foreach(Variant cityValue in cities)
+				{
+					Godot.Collections.Dictionary city = cityValue.AsGodotDictionary();
+					
+					string cityName = city["name"].AsString();
+					GD.Print($"Cities: {city["name"].AsString()}");
+					cityNames.Add(cityName);
+					
+					var populationData = city["population"].AsGodotDictionary();
+					int population = checked((int)populationData["value"].AsInt64());
+
+					var gameplayData = city["gameplay_data"].AsGodotDictionary();
+					var scores = gameplayData["capability_scores"].AsGodotDictionary();
+
+					double economy = scores["economy"].AsDouble();
+					double health = scores["health"].AsDouble();
+					double technology = scores["technology"].AsDouble();
+					double education = scores["education"].AsDouble();
+
+					var CityObject = new City (
+						selectedCountry,
+						cityName,
+						population,
+						health,
+						education
+						
+					);
+					selectedCountry.AddCity(CityObject);
+					expectedCityNames.Add(cityName);
+
+					GD.Print(
+						$"{countryName} > {region["name"].AsString()} > {CityObject} " +
+						$"| Población: {CityObject.Population} " +
+						$"| País asociado: {CityObject.Country.Name}"
+					);
+				}
+			}
+
+			bool sameNames = expectedCityNames.Count == selectedCountry.Cities.Count;
+
+			for (int i = 0; sameNames && i < expectedCityNames.Count; i++)
+			{
+				sameNames = expectedCityNames[i] == selectedCountry.Cities[i].Name;
+			}
+
+			GD.Print(
+				$"País: {selectedCountry.Name} | " +
+				$"Localidades esperadas: {expectedCityNames.Count} | " +
+				$"Objetos creados: {selectedCountry.Cities.Count} | " +
+				$"Coinciden: {sameNames}"
+			);
+			break;
+		}
+		
+
+		_countryListOutput.Text = string.Join("\n", cityNames);
+
+	}
+
+	public void SaveParty()
+	{
+
+		_game.SaveParty(_idCountry);
+	}
 }
+

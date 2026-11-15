@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class Game : Node
 {
+
 	private readonly List<string> _commandList = new()
 	{
 		"next day",
@@ -17,11 +18,17 @@ public partial class Game : Node
 	public CommandManager Commands {get; } = new();
 	public override void _Ready()
 	{
+
 		GD.Print($"Juego iniciado. Día {Time.CurrentDay}");
+		//Time.AdvanceDay();
+		//GD.Print($"Juego iniciado. Día {Time.CurrentDay}");
 		foreach (var city in State.Country.Cities)
 		{
 			GD.Print($"Ciudad: {city.Name}, Población: {city.Population}");
 		}
+		//Console.WriteLine("¿Quieres pasar de día? Escribe Y o N y pulsa Enter.");
+
+
 	}
 
 	public override void _Process(double delta)
@@ -32,6 +39,7 @@ public partial class Game : Node
 	{
 		var spain = new Country("España");
 		var france = new Country("Francia");
+		//var france = new Country("Francia");
 		try
 		{
 			spain.AddCity(new City(spain, "Madrid", 3527924));
@@ -42,6 +50,7 @@ public partial class Game : Node
 		{
 			GD.PrintErr(ex.Message);
 		}
+		//AddCity esta en country
 		var state = new GameState(spain);
 		state.AddCountry(france);
 		return state;
@@ -153,5 +162,11 @@ public partial class Game : Node
 		}
 
 		GD.PrintErr($"No se encontró el país {countryName}.");
+	}
+
+	public void SaveParty(string idCountry)
+	{
+
+		State.saveState(idCountry, Time.CurrentDay, State.Country.Cities);
 	}
 }

@@ -13,13 +13,9 @@ Prototipo de juego de gestión de países hecho con Godot 4.7 y C#/.NET 8. El pr
 
 ## Datos geográficos y atribución
 
-El JSON es una adaptación de **Countries States Cities Database**, de [dr5hn](https://github.com/dr5hn/countries-states-cities-database), distribuida bajo la licencia [Open Database License 1.0 (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/).
+Los archivos JSON de `data/` contienen información geográfica y de juego recopilada de distintas fuentes. La fuente geográfica incluye **Countries States Cities Database**, de [dr5hn](https://github.com/dr5hn/countries-states-cities-database), distribuida bajo la licencia [Open Database License 1.0 (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/).
 
-La adaptación agrupa bajo el nombre «Palestina» los registros de país usados como fuente para Palestina e Israel, y elimina la entrada separada de Israel. Algunos nombres de localidades se cambiaron basándose en la lista histórica aportada para el proyecto; esas correspondencias no se han verificado de forma independiente. Los lugares sin una equivalencia indicada conservan el nombre de la fuente.
-
-La fuente no proporciona población para cada localidad. En el JSON personalizado, `population: 0` indica que el dato no estaba disponible; no significa que la población real sea cero. El conjunto contiene puntos de localidades, pero no una red completa de carreteras.
-
-Al redistribuir o modificar esta base de datos, conserva la atribución y cumple las condiciones de la ODbL. Consulta el enlace de licencia anterior antes de distribuir el juego o bases derivadas.
+Al redistribuir esta fuente, conserva la atribución y cumple las condiciones de la ODbL.
 
 ## Requisitos
 
