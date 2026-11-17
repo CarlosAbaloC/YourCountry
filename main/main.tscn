@@ -133,3 +133,10 @@ offset_top = 614.0
 offset_right = 1151.2329
 offset_bottom = 647.65295
 text = "Save"
+
+[node name="BtnLoad" type="Button" parent="." unique_id=134116864]
+offset_left = 1012.0
+offset_top = 614.0
+offset_right = 1081.2329
+offset_bottom = 647.65295
+text = "Load"

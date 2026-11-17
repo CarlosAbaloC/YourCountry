@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,8 @@ public partial class Game : Node
 	public GameState State { get; } = CreateInitialState();
 	public GameTime Time {get; } = new();
 	public CommandManager Commands {get; } = new();
+
+	public string information = null!;
 	public override void _Ready()
 	{
 
@@ -168,5 +171,32 @@ public partial class Game : Node
 	{
 
 		State.saveState(idCountry, Time.CurrentDay, State.Country.Cities);
+	}
+	
+	public void LoadParty()
+	{
+		
+		information = State.loadState();
+		
+		GD.Print("La informacion sacada del load es: ");
+		GD.Print(information);
+		var parser = new Json();
+        Error parseResult = parser.Parse(information);
+        if(parseResult != Error.Ok)
+        {
+            //Si da error entra aqui
+            GD.PushError($"Error al analizar el JSON {parser.GetErrorMessage()}");
+            return;
+        }
+
+		Variant jsonData = parser.Data;
+		Godot.Collections.Dictionary root = jsonData.AsGodotDictionary();
+		Godot.Collections.Array cities = root["cities"].AsGodotArray();
+
+		int day = root["day"].AsUInt16();
+		Time.LoadDay(day);
+
+		
+
 	}
 }

@@ -25,6 +25,8 @@ public partial class Main : Node
 	private Button _listCountriesButton = null!;
 	private Button _listCitiesButton = null!;
 	private Button _btnSave = null!;
+	private Button _btnLoad = null!;
+
 	private String _idCountry = null!;
 
 
@@ -43,6 +45,7 @@ public partial class Main : Node
 		_listCountriesButton = GetNode<Button>("BtnListCountries");
 		_listCitiesButton = GetNode<Button>("BtnListCities");
 		_btnSave = GetNode<Button>("BtnSave");
+		_btnLoad = GetNode<Button>("BtnLoad");
 
 		_game = new Game();
 		AddChild(_game);
@@ -56,7 +59,8 @@ public partial class Main : Node
 		_listCitiesButton.Pressed += ListCities;
 		YourCountry("Spain");
 		_btnSave.Pressed += SaveParty;
-		
+		_btnLoad.Pressed += LoadParty;
+
 	}
 
 	private void OnCommandSubmitted(string text)
@@ -294,6 +298,10 @@ public partial class Main : Node
 	{
 
 		_game.SaveParty(_idCountry);
+	}
+	public void LoadParty()
+	{
+		_game.LoadParty();
 	}
 }
 

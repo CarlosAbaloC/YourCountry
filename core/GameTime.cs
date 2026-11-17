@@ -11,4 +11,9 @@ public partial class GameTime
 		CurrentDay++;
 		GD.Print($"Avanzando al día {CurrentDay}");
 	}
+
+	public void LoadDay(int day)
+	{
+		CurrentDay = day;
+	}
 }

@@ -56,4 +56,40 @@ public class GameState
         );
         file.StoreString(Json.Stringify(saveData, "\t"));
     }
+    public string loadState()
+    {
+        
+        string jsonText = FileAccess.GetFileAsString(
+			"user://savegame.json"
+		);
+
+        var parser = new Json();
+        Error parseResult = parser.Parse(jsonText);
+        if(parseResult != Error.Ok)
+        {
+            //Si da error entra aqui
+            GD.PushError($"Error al analizar el JSON {parser.GetErrorMessage()}");
+            return "No se ha podido cargar " + parser.GetErrorMessage();
+        }
+
+        Variant jsonData = parser.Data;
+        Godot.Collections.Dictionary root = jsonData.AsGodotDictionary();
+
+        Godot.Collections.Array cities = root["cities"].AsGodotArray();
+        int dia = root["day"].AsInt16();
+        string id = root["id"].AsString();
+
+
+        GD.Print("Ha cargado", jsonData);
+        GD.Print("El dia es", dia);
+        GD.Print("El id es", id);
+        GD.Print(cities);
+        foreach (Variant city in cities)
+        {
+            
+        }
+        
+        return jsonText;
+
+    }
 }
