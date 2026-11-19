@@ -193,10 +193,35 @@ public partial class Game : Node
 		Godot.Collections.Dictionary root = jsonData.AsGodotDictionary();
 		Godot.Collections.Array cities = root["cities"].AsGodotArray();
 
+		
+
 		int day = root["day"].AsUInt16();
 		Time.LoadDay(day);
 
+		GD.Print(State.Country.Name);
 		
+		
+		foreach (var cityValue in cities)
+		{
+			GD.Print(cityValue);
+			
+			Godot.Collections.Dictionary city = cityValue.AsGodotDictionary();
+			GD.Print(city["name"].AsString());
+
+
+			foreach (var nameCity in State.Country.Cities)
+			{
+				var name = nameCity.Name; 
+				GD.Print("Vamos a probar" + nameCity.Name);
+				if(name == city["name"].AsString())
+				{
+					GD.Print($"HA COINCIDIDO {name} CON {nameCity.Name}");
+						
+				}
+			} 
+
+			
+		}
 
 	}
 }
